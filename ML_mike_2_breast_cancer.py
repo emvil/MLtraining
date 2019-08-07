@@ -3,6 +3,7 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
+from ML_tools import display, metrics
 
 # Logistic regression
 # https://pythonhealthcare.org/2018/04/15/66-machine-learning-your-first-ml-model-using-logistic-regression-to-diagnose-breast-cancer/
@@ -77,55 +78,9 @@ print(prediction.head(20))
 # 67 performance metrics
 # https://pythonhealthcare.org/2018/04/16/67-machine-learning-adding-standard-diagnostic-performance-metrics-to-a-ml-diagnosis-model/
 # These metrics can be used when the outcome can be classified as true or false
-from ML_tools import metrics
-
-
-def print_diagnostic_results(performance):
-    """Iterate through, and print, the performance metrics dictionary"""
-
-    print('\nMachine learning diagnostic performance measures:')
-    print('-------------------------------------------------')
-    for key, value in performance.items():
-        print(key, '= %0.3f' % value)  # print 3 decimal places
-    return
-
-
-def print_dict_value_decimal(dictionary, digits=3):
-    """Iterate through, and print the dictionary
-    Input: dictionary with value = number
-    Print the values with a fixed number of decimal digits
-    Author: Mike Allen, modified by EV
-    """
-    # ToDo turn number of digits into an option
-    print('-------------------------------------------------')
-    for key, value in dictionary.items():
-        print(key, '= %0.3f' % value)  # print 3 decimal places
-    return
-
 
 performance = metrics.calculate_diagnostic_performance(y_test, y_pred)
-print_dict_value_decimal(performance)
-
-# 69 Learning rates
-# https://pythonhealthcare.org/2018/04/17/69-machine-learning-how-do-you-know-if-you-have-gathered-enough-data-by-using-learning-rates/
-import matplotlib.pyplot as plt
-
-
-def chart_results(results):
-    x = results['n']
-    y1 = results['training_accuracy']
-    y2 = results['test_accuracy']
-
-    # Create figure
-    fig = plt.figure(figsize=(5, 5))
-    ax = fig.add_subplot(111)
-    ax.plot(x, y1, color='k', linestyle='solid', label='Training set')
-    ax.plot(x, y2, color='b', linestyle='dashed', label='Test set')
-    ax.set_xlabel('training set size (cases)')
-    ax.set_ylabel('Accuracy')
-    plt.title('Effect of training set size on model accuracy')
-    plt.legend()
-    plt.show()
+display.print_dict_value_decimal(performance)
 
 
 
